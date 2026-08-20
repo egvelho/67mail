@@ -1,0 +1,14 @@
+GET http://localhost:3000
+###
+GET http://localhost:3000/users
+###
+POST http://localhost:3000/users
+content-type: application/json
+
+{ "nome": "Elon", "sobrenome": "Musk", "email": "ellinho67@hotmail.com", "senha": "ilovejiminbts666" }
+###
+GET http://localhost:3000/users/67
+###
+PATCH http://localhost:3000/users/10
+###
+DELETE http://localhost:3000/users/6767
