@@ -4,12 +4,12 @@ export class CreateUserDto {
     @IsString()
     @MinLength(2)
     @MaxLength(67)
-    nome!: string
+    name!: string
 
     @IsString()
     @MinLength(2)
     @MaxLength(67)
-    sobrenome!: string
+    surname!: string
 
     @IsEmail()
     email!: string
@@ -17,5 +17,5 @@ export class CreateUserDto {
     @IsString()
     @MinLength(8)
     @MaxLength(67)
-    senha!: string
+    password!: string
 }

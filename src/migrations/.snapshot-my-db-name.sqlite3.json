@@ -4,40 +4,6 @@
     {
       "name": "users",
       "columns": {
-        "bio": {
-          "name": "bio",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "collation": null,
-          "enumItems": [],
-          "mappedType": "text"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "collation": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
         "email": {
           "name": "email",
           "type": "text",
@@ -89,9 +55,9 @@
           "enumItems": [],
           "mappedType": "text"
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "datetime",
+        "password": {
+          "name": "password",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -104,7 +70,24 @@
           "comment": null,
           "collation": null,
           "enumItems": [],
-          "mappedType": "datetime"
+          "mappedType": "text"
+        },
+        "surname": {
+          "name": "surname",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "text"
         }
       },
       "indexes": [

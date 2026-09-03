@@ -11,12 +11,9 @@ export class User {
   @Property({ type: 'string' })
   name!: string;
 
-  @Property({ nullable: true, type: 'string' })
-  bio?: string;
+  @Property({ type: 'string' })
+  surname!: string;
 
-  @Property({ onCreate: () => new Date(), type: 'datetime' })
-  createdAt: Date = new Date();
-
-  @Property({ onUpdate: () => new Date(), type: 'datetime' })
-  updatedAt: Date = new Date();
+  @Property({ type: 'string' })
+  password!: string;
 }
