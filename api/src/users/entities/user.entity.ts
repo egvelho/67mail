@@ -14,6 +14,6 @@ export class User {
   @Property({ type: 'string' })
   surname!: string;
 
-  @Property({ type: 'string' })
+  @Property({ type: 'string', hidden: false })
   password!: string;
 }

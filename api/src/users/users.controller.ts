@@ -9,12 +9,15 @@ import {
   UseGuards,
   ForbiddenException,
   Req,
+  Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -25,10 +28,17 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
-  findAll(@Req() request: Request) {
-    console.log(request['user']);
-    return this.usersService.findAll();
+  async findAll(
+    @Req() request: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const users = await this.usersService.findAll();
+
+    res.setHeader('X-Total-Count', users.length.toString());
+    res.setHeader('Access-Control-Expose-Headers', 'X-Total-Count');
+    res.setHeader('Content-Type', 'application/json');
+
+    return users;
   }
 
   @Get(':id')

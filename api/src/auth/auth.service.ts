@@ -48,9 +48,6 @@ export class AuthService {
       throw new ConflictException('Email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(signUpDto.password, 10);
-    signUpDto.password = hashedPassword;
-
     const user = await this.usersService.create(signUpDto);
     return user;
   }
