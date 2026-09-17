@@ -1,34 +1,57 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import * as bcrypt from 'bcrypt';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
+import { SignUpDto } from './dtos/sign-up.dto';
+import { SignInDto } from './dtos/sign-in.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async register(registerDto: RegisterDto) {
-    const userExists = await this.usersService.findByEmail(registerDto.email);
-    if (userExists) throw new ConflictException('E-mail já cadastrado');
+  async signIn(signInDto: SignInDto) {
+    const user = await this.usersService.findByEmail(signInDto.email);
+    if (user === null) {
+      throw new UnauthorizedException('Invalid username or password');
+    }
 
-    const hashedPassword = await bcrypt.hash(registerDto.password, 10);
-    
-    const user = await this.usersService.create({ ...registerDto, password: hashedPassword });
-    return { message: 'Conta criada com sucesso', user };
+    const isPasswordValid = await bcrypt.compare(
+      signInDto.password,
+      user.password,
+    );
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid username or password');
+    }
+
+    const payload = {
+      id: user.id,
+      name: `${user.name} ${user.surname}`,
+    };
+
+    const jwt = await this.jwtService.signAsync(payload);
+
+    return { accessToken: jwt };
   }
 
-  async login(loginDto: LoginDto) {
-    const user = await this.usersService.findByEmail(loginDto.email);
-    if (!user) throw new UnauthorizedException('Credenciais inválidas');
+  async signUp(signUpDto: SignUpDto) {
+    const userExists = await this.usersService.findByEmail(signUpDto.email);
 
-    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
-    if (!isPasswordValid) throw new UnauthorizedException('Credenciais inválidas');
+    if (userExists !== null) {
+      throw new ConflictException('Email already exists');
+    }
 
-    const payload = { id: user.id, email: user.email };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    const hashedPassword = await bcrypt.hash(signUpDto.password, 10);
+    signUpDto.password = hashedPassword;
+
+    const user = await this.usersService.create(signUpDto);
+    return user;
   }
 }

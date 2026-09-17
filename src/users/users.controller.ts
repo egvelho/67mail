@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ForbiddenException, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  ForbiddenException,
+  Req,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,25 +21,18 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return this.usersService.create(createUserDto);
   }
 
   @Get()
   @UseGuards(AuthGuard)
-  findAll() {
+  findAll(@Req() request: Request) {
+    console.log(request['user']);
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   async findOne(@Param('id') id: string, @Req() request: Request) {
-    const currentUser = request['user'];
-
-    if (+id !== +currentUser.id) {
-      throw new ForbiddenException('Você não tem permissão para acessar este recurso');
-    }
-
     return this.usersService.findOne(Number(id));
   }
 

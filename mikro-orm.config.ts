@@ -5,6 +5,6 @@ import { SeedManager } from '@mikro-orm/seeder';
 export default defineConfig({
   entities: ['./dist/**/*.entity.js'],
   entitiesTs: ['./src/**/*.entity.ts'],
-  dbName: 'my-db-name.sqlite3',
+  dbName: 'database.sqlite3',
   extensions: [Migrator, SeedManager],
 });

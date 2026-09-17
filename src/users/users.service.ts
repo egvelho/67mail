@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/core';
 import { User } from './entities/user.entity';
-import { EntityManager } from '@mikro-orm/core';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -11,7 +10,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: EntityRepository<User>,
-    private readonly em: EntityManager,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -30,12 +28,11 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return this.userRepository.findOne({ email });
+    const user = await this.userRepository.findOne({ email });
+    return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-  }
+  async update(id: number, updateUserDto: UpdateUserDto) {}
 
-  async remove(id: number) {
-  }
+  async remove(id: number) {}
 }
