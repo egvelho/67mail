@@ -11,4 +11,7 @@ export default defineConfig(({ mode }) => ({
     sourcemap: mode === "development",
   },
   base: "./",
+  preview: {
+    allowedHosts: true,
+  },
 }));
