@@ -1,6 +1,6 @@
 export const authProvider = {
   login: async ({ username, password }: any) => {
-    const request = new Request("http://localhost:3000/auth/sign-in", {
+    const request = new Request("https://api.imeiou.com/auth/sign-in", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: new Headers({ "Content-Type": "application/json" }),

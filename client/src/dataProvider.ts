@@ -1,6 +1,6 @@
 import { fetchUtils } from "react-admin";
 
-const apiUrl = "http://localhost:3000";
+const apiUrl = "https://api.imeiou.com";
 
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {

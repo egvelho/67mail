@@ -31,7 +31,7 @@ export const EmailSendView = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/emails/send-email", {
+      const response = await fetch("https://api.imeiou.com/emails/send-email", {
         method: "POST",
         headers: {
           accept: "application/json",
