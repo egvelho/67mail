@@ -9,7 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: 'otorrinolaringologista',
+      secret: process.env.JWT_TOKEN,
       signOptions: { expiresIn: '365d' },
     }),
   ],

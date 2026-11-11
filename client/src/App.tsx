@@ -7,6 +7,8 @@ import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { EmailSendView } from "./EmailSendView";
 import { MyMenu } from "./MyMenu";
+import { ListEmailsView } from "./ListEmailsView";
+import { Dashboard } from "./Dashboard";
 
 import { UserList, UserCreate, UserEdit } from "./users";
 
@@ -18,6 +20,7 @@ export const App = () => (
     dataProvider={dataProvider}
     authProvider={authProvider}
     loginPage={LoginPage}
+    dashboard={Dashboard}
   >
     <CustomRoutes noLayout>
       <Route path="/register" element={<RegisterPage />} />
@@ -25,14 +28,8 @@ export const App = () => (
 
     <CustomRoutes>
       <Route path="/emails/send-email" element={<EmailSendView />} />
+      <Route path="/emails/list-email" element={<ListEmailsView />} />
     </CustomRoutes>
-
-    <Resource
-      name="users"
-      list={UserList}
-      create={UserCreate}
-      edit={UserEdit}
-    />
   </Admin>
 );
 

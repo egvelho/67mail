@@ -27,11 +27,14 @@ export const RegisterPage = () => {
     setError("");
 
     try {
-      const response = await fetch("https://api.imeiou.com/auth/sign-up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, surname, username, password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/sign-up`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, surname, username, password }),
+        },
+      );
 
       const contentType = response.headers.get("content-type");
       const data =

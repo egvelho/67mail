@@ -1,6 +1,6 @@
 import { fetchUtils } from "react-admin";
 
-const apiUrl = "https://api.imeiou.com";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {

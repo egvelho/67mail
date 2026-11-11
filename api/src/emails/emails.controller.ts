@@ -27,7 +27,7 @@ export class EmailsController {
   ) {
     const id = +request['user'].id;
     const user = await this.usersService.findOne(id);
-    const from = `${user.username}@imeiou.com`;
+    const from = `${user.username}@${process.env.EMAIL_DOMAIN}`;
     const fromName = `${user.name} ${user.surname}`;
     const sendEmailDto: SendEmailDto = {
       ...requestSendEmailDto,

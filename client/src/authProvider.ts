@@ -1,10 +1,13 @@
 export const authProvider = {
   login: async ({ username, password }: any) => {
-    const request = new Request("https://api.imeiou.com/auth/sign-in", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: new Headers({ "Content-Type": "application/json" }),
-    });
+    const request = new Request(
+      `${import.meta.env.VITE_API_URL}/auth/sign-in`,
+      {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      },
+    );
 
     const response = await fetch(request);
     if (!response.ok) {

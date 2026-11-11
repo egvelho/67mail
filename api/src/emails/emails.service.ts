@@ -16,8 +16,7 @@ export class EmailsService {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        'api-key':
-          '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',
+        'api-key': process.env.EMAIL_API_KEY ?? '',
         'content-type': 'application/json',
       },
       body: JSON.stringify({

@@ -31,20 +31,23 @@ export const EmailSendView = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://api.imeiou.com/emails/send-email", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/emails/send-email`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            to: formData.to,
+            toName: formData.to,
+            subject: formData.subject,
+            content: formData.content,
+          }),
         },
-        body: JSON.stringify({
-          to: formData.to,
-          toName: formData.toName,
-          subject: formData.subject,
-          content: formData.content,
-        }),
-      });
+      );
 
       if (!response.ok) {
         throw new Error("Erro ao enviar requisição.");
@@ -60,7 +63,7 @@ export const EmailSendView = () => {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 3 }, maxWidth: 700, mx: "auto" }}>
+    <Box sx={{ p: { xs: 2, sm: 3 }, maxWidth: 900, width: "100%", mx: "auto" }}>
       <Title title="Enviar E-mail" />
 
       <Card sx={{ mt: 2 }}>
@@ -79,7 +82,7 @@ export const EmailSendView = () => {
             sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
             <TextField
-              label="to"
+              label="Para"
               name="to"
               type="email"
               value={formData.to}
@@ -89,20 +92,8 @@ export const EmailSendView = () => {
               placeholder="email@destino.com"
               variant="outlined"
             />
-
             <TextField
-              label="toName"
-              name="toName"
-              value={formData.toName}
-              onChange={handleChange}
-              required
-              fullWidth
-              placeholder="Nome do destinatário"
-              variant="outlined"
-            />
-
-            <TextField
-              label="subject"
+              label="Assunto"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
@@ -113,7 +104,7 @@ export const EmailSendView = () => {
             />
 
             <TextField
-              label="content"
+              label="Conteúdo"
               name="content"
               value={formData.content}
               onChange={handleChange}
