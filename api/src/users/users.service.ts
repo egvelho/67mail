@@ -16,6 +16,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const salt = await bcrypt.genSalt(10);
     createUserDto.password = await bcrypt.hash(createUserDto.password, salt);
+    createUserDto.username = createUserDto.username.toLowerCase();
 
     const user = this.userRepository.create(createUserDto);
     await this.userRepository.getEntityManager().flush();

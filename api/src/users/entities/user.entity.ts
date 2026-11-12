@@ -1,4 +1,11 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+import {
+  Entity,
+  PrimaryKey,
+  Property,
+  OneToMany,
+} from '@mikro-orm/decorators/legacy';
+import { Email } from '@/src/emails/entities/email.entity';
+import { Collection } from '@mikro-orm/core';
 
 @Entity({ tableName: 'users' })
 export class User {
@@ -16,4 +23,7 @@ export class User {
 
   @Property({ type: 'string', hidden: false })
   password!: string;
+
+  @OneToMany(() => Email, (email) => email.user, { hidden: true })
+  emails = new Collection<Email>(this);
 }
