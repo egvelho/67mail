@@ -97,10 +97,12 @@ export class EmailsService {
     return { message: `E-mail com ID ${id} removido com sucesso` };
   }
 
-  findAllByUser(userId: number) {
+  async findAllByUser(userId: number) {
     return this.emailRepository.find(
-      { user: { id: userId } },
-      { populate: ['user'] },
+      { user: userId },
+      {
+        orderBy: { createdAt: 'DESC' },
+      },
     );
   }
 
